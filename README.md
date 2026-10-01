@@ -117,6 +117,14 @@ on tablets and convertibles when no hardware keyboard is available.
 
 3. Click the keyboard button on the login screen to show/hide it. The login
    panel is shifted up out of the way while the keyboard is visible.
+4. Optional: the X11 greeter's Xorg reports 96 DPI (scale 1), which can make
+   the login screen look smaller than the Wayland greeter (which scaled by the
+   desktop's factor). Match it by setting `Xft.dpi` in
+   `/usr/share/sddm/scripts/Xsetup`, e.g. for a 1.75× desktop scale:
+
+   ```sh
+   printf 'Xft.dpi: 168\n' | xrdb -merge
+   ```
 
 #### Breeze Theme with Monochrome Colors
 If the built-in Breeze theme is preferred, select it and **Apply Plasma Settings** in **System Settings** > **Colors & Themes** > **Login Screen (SDDM)**.
