@@ -36,7 +36,7 @@ Item {
       fill: parent
       leftMargin: Screen.width * 0.02
       rightMargin: Screen.width * 0.02
-      bottomMargin: Screen.height * 0.02
+      bottomMargin: Screen.height * 0.02 + (virtualKeyboard.activated ? virtualKeyboard.height : 0)
     }
     Clock {
       id: time
@@ -45,6 +45,16 @@ Item {
     LoginPanel {
       id: loginPanel
       anchors.fill: parent
+      virtualKeyboard: virtualKeyboard
+    }
+  }
+  VirtualKeyboard {
+    id: virtualKeyboard
+    z: 10
+    anchors {
+      left: parent.left
+      right: parent.right
+      bottom: parent.bottom
     }
   }
 }

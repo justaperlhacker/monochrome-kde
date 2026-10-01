@@ -9,6 +9,9 @@ Item {
   property var session: sessionPanel.session
   property var inputHeight: 144
   property var inputWidth: 256
+  // Reference to the on-screen keyboard living in Main.qml. May be null
+  // when the theme is used without the virtual keyboard.
+  property var virtualKeyboard: null
   Rectangle {
     id: loginBackground
     anchors {
@@ -152,6 +155,66 @@ Item {
         }
         onClicked: {
           sddm.login(user, password, session)
+        }
+      }
+    }
+    Item {
+      id: keyboardButtonRow
+      width: parent.width
+      height: keyboardButton.height
+      Button {
+        id: keyboardButton
+        anchors.centerIn: parent
+        width: 30
+        height: 30
+        hoverEnabled: true
+        enabled: virtualKeyboard !== null
+        icon {
+          source: Qt.resolvedUrl("../icons/keyboard.svg")
+          color: virtualKeyboard !== null && virtualKeyboard.activated ? config.textHighlight : config.textDefault
+        }
+        background: Rectangle {
+          id: keyboardButtonBackground
+          color: config.buttonBgNormal
+          border.color: config.buttonBorderNormal
+          border.width: 1
+          radius: 2
+          opacity: config.opacityDefault
+        }
+        states: [
+          State {
+            name: "pressed"
+            when: keyboardButton.down
+            PropertyChanges {
+              target: keyboardButtonBackground
+              border.color: config.buttonBorderPressed
+              color: config.buttonBgPressed
+              opacity: 1
+            }
+          },
+          State {
+            name: "hovered"
+            when: keyboardButton.hovered
+            PropertyChanges {
+              target: keyboardButtonBackground
+              border.color: config.buttonBorderHovered
+              opacity: 1
+            }
+          }
+        ]
+        transitions: Transition {
+          PropertyAnimation {
+            properties: "color"
+            duration: 300
+          }
+        }
+        onClicked: {
+          if (virtualKeyboard !== null) {
+            virtualKeyboard.activated = !virtualKeyboard.activated
+          }
+          // Keep focus on the password field so on-screen key presses are
+          // delivered to it instead of being swallowed by the button.
+          passwordField.forceActiveFocus()
         }
       }
     }

@@ -1,5 +1,11 @@
 # Monochrome KDE - CHANGELOG
 
+## Unreleased
+
+- SDDM: Added an optional on-screen (Qt Virtual Keyboard) toggle button to the
+  login screen for tablet/touch use. The login panel shifts up while the
+  keyboard is shown.
+
 ## First Release - 30 November 2018
 
 - First release of Monochrome KDE theme, which includes the following components:

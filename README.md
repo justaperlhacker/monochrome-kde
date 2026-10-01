@@ -92,6 +92,24 @@ SDDM theme can be configured by editing `/usr/share/sddm/themes/monochrome/theme
 | `Background`       | This is the location of the background image, it is recomended to use the provided `backgrounds/` directory to store the images.                                  |
 | `LoginBackground`  | Adds a extra background around the login panel, this should be set to either `true` or `false`.                                                                   |
 
+#### Virtual Keyboard (optional)
+The login screen has an optional on-screen (touch) keyboard toggle — the
+keyboard icon button below the login button. It is useful on tablets and
+convertibles when no hardware keyboard is available.
+
+1. Install the Qt Virtual Keyboard module (Arch: `qt6-virtualkeyboard`,
+   Debian/Ubuntu: `qt6-virtualkeyboard` / `qml6-module-qtquick-virtualkeyboard`).
+2. Enable the input method for SDDM by adding the following to a drop-in,
+   e.g. `/etc/sddm.conf.d/10-virtualkeyboard.conf`:
+
+   ```
+   [General]
+   InputMethod=qtvirtualkeyboard
+   ```
+
+3. Click the keyboard button on the login screen to show/hide it. The login
+   panel is shifted up out of the way while the keyboard is visible.
+
 #### Breeze Theme with Monochrome Colors
 If the built-in Breeze theme is preferred, select it and **Apply Plasma Settings** in **System Settings** > **Colors & Themes** > **Login Screen (SDDM)**.
 
