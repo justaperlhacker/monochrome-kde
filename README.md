@@ -94,18 +94,26 @@ SDDM theme can be configured by editing `/usr/share/sddm/themes/monochrome/theme
 
 #### Virtual Keyboard (optional)
 The login screen has an optional on-screen (touch) keyboard toggle — the
-keyboard icon button below the login button. It is useful on tablets and
-convertibles when no hardware keyboard is available.
+keyboard icon button next to the session selector (bottom-right). It is useful
+on tablets and convertibles when no hardware keyboard is available.
 
-1. Install the Qt Virtual Keyboard module (Arch: `qt6-virtualkeyboard`,
-   Debian/Ubuntu: `qt6-virtualkeyboard` / `qml6-module-qtquick-virtualkeyboard`).
-2. Enable the input method for SDDM by adding the following to a drop-in,
-   e.g. `/etc/sddm.conf.d/10-virtualkeyboard.conf`:
+1. Install the Qt Virtual Keyboard module (Arch: `qt6-virtualkeyboard`).
+2. Enable it for SDDM with a drop-in, e.g.
+   `/etc/sddm.conf.d/zz-monochrome-vk.conf`:
 
    ```
    [General]
    InputMethod=qtvirtualkeyboard
+   DisplayServer=x11
+
+   [X11]
+   EnableHiDPI=true
    ```
+
+   **Note:** SDDM discards `qtvirtualkeyboard` on the Wayland greeter (the Qt
+   Virtual Keyboard is not supported client-side on Wayland), so the greeter
+   must run on X11 (`DisplayServer=x11`). Your desktop session is unaffected
+   and can still be Wayland.
 
 3. Click the keyboard button on the login screen to show/hide it. The login
    panel is shifted up out of the way while the keyboard is visible.
